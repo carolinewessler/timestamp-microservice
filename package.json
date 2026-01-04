@@ -1,0 +1,28 @@
+{
+  "name": "timestamp-microservice",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/carolinewessler/timestamp-microservice#readme",
+  "bugs": {
+    "url": "https://github.com/carolinewessler/timestamp-microservice/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carolinewessler/timestamp-microservice.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "myapp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon myapp.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
