@@ -18,28 +18,62 @@ app.get('/api', (req, res) => {
     utc: new Date().toUTCString() });
 });
 
-app.get('/api/:date', (req, res) => {
-  const dateParam = req.params.date; //2023-05-15 or 1450137600000
-  console.log('dateParam', dateParam);
-  const newDate = new Date(dateParam); //Wed Aug 08 2029 21:00:00 GMT-0300 (Brasilia Standard Time)
-  console.log('newDate.toString', newDate.toString());
-  console.log('newDate', newDate);
+// app.get('/api/:date', (req, res) => {
+//   const dateParam = req.params.date; //2023-05-15 or 1450137600000
+//   const newDate = new Date(dateParam); //Wed Aug 08 2029 21:00:00 GMT-0300 (Brasilia Standard Time)
 
-  if (newDate.toString() === "Invalid Date") {
-    const unixConversion = dateParam * 1000;
-    res.json({ 
-      type: 'unix date',
-      unix: dateParam,
-      utc: new Date(unixConversion)
-     })
+//   if (isNaN(newDate.getTime())) {
+//       res.json({ 
+//         error : "Invalid Date"
+//       });
+//       return;
+//   } else {
+//     if (/^\d+$/.test(dateParam)) {
+//       const dateParamToNumber = parseInt(dateParam);
+//       const numberToDate = new Date(dateParamToNumber);
+
+//       res.json({
+//         unix: numberToDate.getTime(),
+//         utc: numberToDate.toUTCString()
+//       });
+//       return;
+//     } else if (/-/.test(dateParam)) {
+
+//       res.json({
+//         unix: newDate.getTime(),
+//         utc: newDate.toUTCString()
+//       });
+//       return;
+//     } else {
+//       res.json({
+//         unix: 'hi'
+//       });
+//       return;
+//     }
+//   }
+// });
+
+app.get('/api/:date', (req, res) => {
+  const dateParam = req.params.date;
+
+  let dateObj;
+
+  if (/^\d+$/.test(dateParam)) {
+    const dateParamToNumber = parseInt(dateParam);
+    dateObj = new Date(dateParamToNumber);
+  } else {
+    dateObj = new Date(dateParam);
+  }
+
+  if (isNaN(dateObj.getTime())) {
+    res.json({ error: 'Invalid Date' });
     return;
-  } else if (dateParam.includes("-")) {
-    res.json({ 
-      type: 'hifen date',
-      unix: newDate.getTime(), 
-      utc: newDate.toUTCString() });
-    return;
-  } 
+  }
+
+  res.json({
+    unix: dateObj.getTime(),
+    utc: dateObj.toUTCString()
+  });
 });
 
 app.listen(port, () => {
